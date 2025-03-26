@@ -3,8 +3,10 @@
 # deactivate: desativar o ambiente virtual
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 import sqlite3
 
 
@@ -23,6 +25,9 @@ def init_db():
 
 init_db()
 
+@app.route("/")
+def home():
+    return "<h1>Olá Vai na Web!! Bem-vindos a nossa API!</h1>"
 
 @app.route("/doar", methods =["POST"])
 def doar():
@@ -65,10 +70,6 @@ def listar_livros():
             livros_formatados.append(dicionario_livros)
 
     return jsonify(livros_formatados), 200
-
-@app.route("/")
-def home():
-    return "<h1>Olá Vai na Web!! Bem-vindos a nossa API!</h1>"
 
 
 if __name__ == "__main__":
